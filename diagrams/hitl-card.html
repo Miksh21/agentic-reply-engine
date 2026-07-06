@@ -1,0 +1,173 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Route 12 — Slack HITL card</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Lato", sans-serif;
+    background: #1a1d21; min-height: 100vh; padding: 40px 16px;
+    display: flex; flex-direction: column; align-items: center; gap: 28px;
+  }
+  .page-title { color: #ababad; font-size: 13px; letter-spacing: .04em; text-transform: uppercase; }
+  .slack-window {
+    width: 100%; max-width: 680px; background: #1a1d21;
+    border: 1px solid #35373b; border-radius: 12px; overflow: hidden;
+    box-shadow: 0 16px 48px rgba(0,0,0,.5);
+  }
+  .channel-bar {
+    padding: 12px 18px; border-bottom: 1px solid #35373b;
+    color: #d1d2d3; font-weight: 700; font-size: 15px;
+    display: flex; align-items: center; gap: 8px;
+  }
+  .channel-bar .hash { color: #9b9c9e; font-weight: 400; }
+  .msg { display: flex; gap: 10px; padding: 18px; }
+  .avatar {
+    width: 38px; height: 38px; border-radius: 6px; flex-shrink: 0;
+    background: linear-gradient(135deg, #36c5f0, #2eb67d);
+    display: flex; align-items: center; justify-content: center; font-size: 20px;
+  }
+  .msg-body { flex: 1; min-width: 0; }
+  .msg-meta { display: flex; align-items: baseline; gap: 7px; margin-bottom: 6px; }
+  .bot-name { color: #d1d2d3; font-weight: 900; font-size: 15px; }
+  .app-badge {
+    background: #35373b; color: #ababad; font-size: 10px; font-weight: 700;
+    padding: 1px 5px; border-radius: 3px; letter-spacing: .02em;
+  }
+  .ts { color: #ababad; font-size: 12px; }
+
+  .card-header { color: #d1d2d3; font-weight: 900; font-size: 19px; margin: 6px 0 8px; }
+  .ctx { color: #ababad; font-size: 12.5px; margin-bottom: 14px; line-height: 1.5; }
+  .ctx b { color: #d1d2d3; }
+
+  .quote {
+    border-left: 4px solid #5a5c60; padding: 4px 0 4px 12px; margin: 4px 0 16px;
+    color: #d1d2d3; font-size: 14.5px; line-height: 1.5; font-style: italic;
+  }
+  .label { color: #d1d2d3; font-weight: 700; font-size: 13.5px; margin-bottom: 4px; }
+
+  .fields { display: grid; grid-template-columns: 1fr 1fr; gap: 12px 20px; margin: 0 0 16px; }
+  .field .k { color: #d1d2d3; font-weight: 700; font-size: 13px; }
+  .field .v { color: #ababad; font-size: 13.5px; line-height: 1.45; }
+  .conf-flag { color: #e8912d; font-weight: 700; }
+
+  .draft {
+    border-left: 4px solid #2eb67d; background: #222529; border-radius: 0 8px 8px 0;
+    padding: 12px 14px; margin: 4px 0 16px;
+    color: #d1d2d3; font-size: 14px; line-height: 1.55; white-space: pre-line;
+  }
+  .draft-note { color: #ababad; font-style: italic; font-weight: 400; font-size: 12.5px; }
+
+  .actions { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 14px; }
+  .btn {
+    font-size: 13.5px; font-weight: 700; padding: 7px 14px; border-radius: 6px;
+    border: 1px solid #5a5c60; background: transparent; color: #d1d2d3; cursor: pointer;
+    transition: filter .1s;
+  }
+  .btn:hover { filter: brightness(1.25); }
+  .btn.primary { background: #007a5a; border-color: #007a5a; color: #fff; }
+  .btn.danger  { border-color: #e01e5a; color: #e01e5a; }
+  .select {
+    font-size: 13.5px; padding: 7px 12px; border-radius: 6px;
+    border: 1px solid #5a5c60; background: #222529; color: #ababad;
+    display: inline-flex; align-items: center; gap: 8px; cursor: pointer;
+  }
+  .select .chev { font-size: 10px; }
+
+  .footer { color: #9b9c9e; font-size: 12px; line-height: 1.5; border-top: 1px solid #35373b; padding-top: 10px; }
+  .footer code { background: #222529; padding: 1px 5px; border-radius: 4px; font-size: 11.5px; color: #d1d2d3; }
+
+  .legend {
+    width: 100%; max-width: 680px; color: #ababad; font-size: 13px; line-height: 1.65;
+    background: #222529; border: 1px solid #35373b; border-radius: 10px; padding: 16px 20px;
+  }
+  .legend h2 { color: #d1d2d3; font-size: 14px; margin-bottom: 8px; }
+  .legend li { margin: 0 0 6px 18px; }
+  .legend b { color: #d1d2d3; }
+</style>
+</head>
+<body>
+
+<div class="page-title">Route 12 · human-in-the-loop card — the only human touchpoint in the engine</div>
+
+<div class="slack-window">
+  <div class="channel-bar"><span class="hash">#</span>reply-review</div>
+  <div class="msg">
+    <div class="avatar">🔀</div>
+    <div class="msg-body">
+      <div class="msg-meta">
+        <span class="bot-name">Reply Engine</span>
+        <span class="app-badge">APP</span>
+        <span class="ts">Today at 10:47</span>
+      </div>
+
+      <div class="card-header">🔀 Reply needs a human</div>
+
+      <div class="ctx">
+        <b>Petr Svoboda</b> · HR Director · <b>Strojírna MHX</b> (120 employees, manufacturing)
+        &nbsp;·&nbsp; thread: <b>Klára V.</b> &nbsp;·&nbsp; channel: email
+      </div>
+
+      <div class="label">Their reply:</div>
+      <div class="quote">Dobrý den, jak jste se k nám vlastně dostali? Nábor teď neřešíme,
+        ale ta část s technickými pozicemi mě zaujala.</div>
+
+      <div class="fields">
+        <div class="field">
+          <div class="k">Classifier's best guess</div>
+          <div class="v">Route 2 · Nurture</div>
+        </div>
+        <div class="field">
+          <div class="k">Confidence</div>
+          <div class="v"><span class="conf-flag">0.62</span> → escalated (&lt; 0.80)</div>
+        </div>
+        <div class="field">
+          <div class="k">Why ambiguous</div>
+          <div class="v">Meta-question + "not hiring" + explicit interest, in one reply</div>
+        </div>
+        <div class="field">
+          <div class="k">Signals at send time</div>
+          <div class="v">2 open technical roles · ex-employee at client</div>
+        </div>
+      </div>
+
+      <div class="label">Suggested draft <span class="draft-note">(staged in the sequencer inbox — not sent)</span></div>
+      <div class="draft">Dobrý den, pane Svobodo,
+
+díky za upřímnou otázku. Všimli jsme si, že hledáte servisního technika a projektanta, proto jsem se ozvala.
+
+A právě technické pozice jsou to, kde klientům pomáháme nejčastěji. Kdybych vám poslala dva příklady obsazených rolí z výroby, dávalo by to smysl?
+
+Klára</div>
+
+      <div class="actions">
+        <button class="btn primary">✅ Send draft</button>
+        <button class="btn">✏️ Edit</button>
+        <button class="btn danger">🚫 Close</button>
+        <span class="select">…or re-route as <span class="chev">▼</span></span>
+      </div>
+
+      <div class="footer">
+        Every click here becomes a labeled correction for next week's classifier
+        &nbsp;·&nbsp; full thread: <code>/timeline 48211</code>
+        &nbsp;·&nbsp; re-ping in 24 h if unactioned
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="legend">
+  <h2>What this card is doing (design notes)</h2>
+  <ul>
+    <li><b>Everything is pre-staged.</b> Classification, context, signals, and a ready draft — the human contribution is one click, not a writing task. The draft is simultaneously parked in the sequencer inbox, so the rep can act from either surface.</li>
+    <li><b>The confidence line shows its work.</b> 0.62 with the escalation reason — the rep learns to trust the gate because they can see why it fired.</li>
+    <li><b>The re-route selector is the training-data collector.</b> Approve = confirmation, Edit = style correction, re-route = classification correction. All three land in the decisions ledger and become retrieved few-shot examples for next week's classifier.</li>
+    <li><b>The draft obeys the language guardrails</b> — correct Czech vocative ("pane Svobodo"), verb forms matching the sender's gender ("jsem se ozvala" — Klára), roles declined to the case the sentence demands, no em-dashes.</li>
+    <li><b>Fictional example.</b> Names, company, and reply are invented for this mock; the card layout matches the live Block Kit payload in <code>examples/slack_hitl_card.json</code>.</li>
+  </ul>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,85 @@
+{
+  "_comment": "Route 12 HITL card — Slack Block Kit. Posted by WF1; clicks handled by WF4 via interaction webhook. Rendered preview: diagrams/hitl-card.html. Names and companies are fictional.",
+  "channel": "#reply-review",
+  "blocks": [
+    {
+      "type": "header",
+      "text": { "type": "plain_text", "text": "🔀 Reply needs a human", "emoji": true }
+    },
+    {
+      "type": "context",
+      "elements": [
+        { "type": "mrkdwn", "text": "*Petr Svoboda* · HR Director · *Strojírna MHX* (120 employees, manufacturing) · thread: *Klára V.* · channel: email" }
+      ]
+    },
+    {
+      "type": "section",
+      "text": {
+        "type": "mrkdwn",
+        "text": "*Their reply:*\n> Dobrý den, jak jste se k nám vlastně dostali? Nábor teď neřešíme, ale ta část s technickými pozicemi mě zaujala."
+      }
+    },
+    {
+      "type": "section",
+      "fields": [
+        { "type": "mrkdwn", "text": "*Classifier's best guess*\nRoute 2 · Nurture" },
+        { "type": "mrkdwn", "text": "*Confidence*\n0.62 → escalated (< 0.80)" },
+        { "type": "mrkdwn", "text": "*Why ambiguous*\nMeta-question + \"not hiring\" + explicit interest, in one reply" },
+        { "type": "mrkdwn", "text": "*Signals at send time*\n2 open technical roles · ex-employee at client" }
+      ]
+    },
+    {
+      "type": "section",
+      "text": {
+        "type": "mrkdwn",
+        "text": "*Suggested draft* _(staged in the sequencer inbox — not sent)_:\n>>> Dobrý den, pane Svobodo,\n\ndíky za upřímnou otázku. Všimli jsme si, že hledáte servisního technika a projektanta, proto jsem se ozvala.\n\nA právě technické pozice jsou to, kde klientům pomáháme nejčastěji. Kdybych vám poslala dva příklady obsazených rolí z výroby, dávalo by to smysl?\n\nKlára"
+      }
+    },
+    {
+      "type": "actions",
+      "elements": [
+        {
+          "type": "button",
+          "style": "primary",
+          "text": { "type": "plain_text", "text": "✅ Send draft", "emoji": true },
+          "action_id": "hitl_send",
+          "value": "conversation:48211|draft:9812"
+        },
+        {
+          "type": "button",
+          "text": { "type": "plain_text", "text": "✏️ Edit", "emoji": true },
+          "action_id": "hitl_edit",
+          "value": "conversation:48211|draft:9812"
+        },
+        {
+          "type": "button",
+          "style": "danger",
+          "text": { "type": "plain_text", "text": "🚫 Close", "emoji": true },
+          "action_id": "hitl_close",
+          "value": "conversation:48211"
+        },
+        {
+          "type": "static_select",
+          "placeholder": { "type": "plain_text", "text": "…or re-route as", "emoji": true },
+          "action_id": "hitl_reroute",
+          "options": [
+            { "text": { "type": "plain_text", "text": "1 · Book it now" }, "value": "route:1" },
+            { "text": { "type": "plain_text", "text": "2 · Nurture" }, "value": "route:2" },
+            { "text": { "type": "plain_text", "text": "3 · Timing" }, "value": "route:3" },
+            { "text": { "type": "plain_text", "text": "5 · Soft no" }, "value": "route:5" },
+            { "text": { "type": "plain_text", "text": "6 · Incumbent" }, "value": "route:6" },
+            { "text": { "type": "plain_text", "text": "7 · More info" }, "value": "route:7" },
+            { "text": { "type": "plain_text", "text": "8 · Referral" }, "value": "route:8" },
+            { "text": { "type": "plain_text", "text": "9 · Not in space" }, "value": "route:9" }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "context",
+      "elements": [
+        { "type": "mrkdwn", "text": "Every click here becomes a labeled correction for next week's classifier · full thread: `/timeline 48211` · re-ping in 24 h if unactioned" }
+      ]
+    }
+  ]
+}

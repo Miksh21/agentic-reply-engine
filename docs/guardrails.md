@@ -18,7 +18,7 @@ Classification confidence < 0.8 → route 12. No exceptions, no "but the entitie
 
 Warmup-network traffic is excluded **before** classification — by known peer addresses and headers — not detected after.
 
-**Failure mode prevented (observed):** warmup emails are engineered to look like real correspondence, which means they also look like real replies to a webhook. Unfiltered, they flood the CRM with ghost activity, poison the ledger, and burn classifier calls on synthetic mail. This one is a landmine because nothing *errors* — the system just quietly fills with garbage.
+**Failure mode prevented (observed):** warmup emails are engineered to look like real correspondence, which means they also look like real replies to a webhook. Unfiltered, they flood the CRM with ghost activity, poison the ledger, and burn classifier calls on synthetic mail. This one is a landmine because nothing *errors* — the system just quietly fills with garbage. The original incident (~10k junk CRM records in one flood, weeks of cleanup) is documented in the sibling repo: [consolidation.md](https://github.com/Miksh21/signal-driven-outbound/blob/main/docs/consolidation.md).
 
 ## 4 · The humanizer
 

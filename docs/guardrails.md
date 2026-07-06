@@ -1,6 +1,6 @@
 # Guardrails
 
-"Fully agentic" survives contact with real prospects only because of these six. Each exists because of a specific failure mode — three of them observed, three anticipated.
+"Fully agentic" survives contact with real prospects only because of these six. Each exists because of a specific failure mode — three of them learned from real incidents, three designed in from day one.
 
 ## 1 · The two-turn rule
 

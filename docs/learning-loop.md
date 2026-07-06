@@ -42,6 +42,6 @@ The rationale: Tier A changes are numeric, bounded, and reversible — automatio
 
 This is the same design instinct as the route-12 escalation: full autonomy where there's a playbook and bounded blast radius; a cheap human gate exactly where errors compound.
 
-## Cold-start honesty
+## Cold-start discipline
 
-The loop is meaningless until decisions and outcomes accumulate — realistically **4–6 weeks** of live traffic. Build order reflects that: the ledger ships first (useful from day one for search and audit), the learning job ships last. Turning on a bandit with 30 sends per variant just launders noise into confident-looking weights.
+The loop is meaningless until decisions and outcomes accumulate — realistically **4–6 weeks** of traffic. The build order respected that: the ledger shipped first (useful from day one for search and audit), the learning job came last, and it stays conservative while sample sizes are small. Turning on a bandit with 30 sends per variant just launders noise into confident-looking weights.
